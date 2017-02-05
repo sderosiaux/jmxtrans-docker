@@ -53,4 +53,7 @@ If we connect to http://localhost:8080/, we can see the Graphite UI without metr
 
 If jmxtrans was started, then we'll see our metrics too.
 
+# About JMXTrans configuration
+
+You'll notice I've added `"flushStrategy": "always"` to the output writer because while testing, my metrics were never flushed, thus Graphite was always empty. In production, that should not be necessary.
 
