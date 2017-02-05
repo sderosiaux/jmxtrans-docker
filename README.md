@@ -32,6 +32,8 @@ We need to provide some conf and we can add a volume binding to get the logs (op
 
 There is a default configuration provided in the repo (`jmxtrans_conf`) but it won't fit your case: It is listening to `192.168.0.11:9010` to grab JMX data, you probably need to change that to your IP:port.
 
+Note that JMXTrans will pull data from JMX every 10s (configured in the image command itself).
+
 ```
 $ ls jmxtrans_conf
 jmxtrans.conf
@@ -40,11 +42,11 @@ $ docker run -d --name jmxtrans -v c:/tmp/jmxtrans-docker/jmxtrans_log:/opt/jmxt
                                 chtefi/jmxtrans
 ```
 
-If the configuration is all right (looking at the logs), we can start Graphite to store the metrics and display them.
+If the configuration is all right (we can know by looking at the logs if we mount the volume), we can now start Graphite to store the metrics and display them.
 
 ## Start Graphite + Carbon.
 
-This image expose 4 ports but only 2 are interesting for us: 80 for the interface, and 2003 to send our metrics.
+This image exposes 4 ports but only 2 are interesting for us: 80 for the interface, and 2003 to send our metrics.
 ```
 $ docker run -p 8080:80 -p 2003:2003 -d nickstenning/graphite
 ```
