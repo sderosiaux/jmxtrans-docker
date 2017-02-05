@@ -26,7 +26,7 @@ The image provides 2 volumes (and does not expose any port):
 
 # Start the containers
 
-- Start our JMXTrans image.
+## Start our JMXTrans image.
 
 We need to provide some conf and we can add a volume binding to get the logs (optional).
 
@@ -42,7 +42,7 @@ $ docker run -d --name jmxtrans -v c:/tmp/jmxtrans-docker/jmxtrans_log:/opt/jmxt
 
 If the configuration is all right (looking at the logs), we can start Graphite to store the metrics and display them.
 
-- Start Graphite + Carbon.
+## Start Graphite + Carbon.
 
 This image expose 4 ports but only 2 are interesting for us: 80 for the interface, and 2003 to send our metrics.
 ```
