@@ -37,6 +37,8 @@ $ docker run -p 8080:80 -p 2003:2003 -d nickstenning/graphite
 
 If we connect to http://localhost:8080/, we can see the Graphite UI without metrics, a few seconds later, some `carbon` metrics will appears (automatic).
 
+Graphite provides the visual dashboards and Carbon provides the storage piece (port 2003).
+
 ## Start our JMXTrans image.
 
 - We need to provide some conf by mounting the volumne `/opt/jmxtrans/conf`.
@@ -62,9 +64,7 @@ $ docker run -d --name jmxtrans -v c:/tmp/jmxtrans-docker/jmxtrans_log:/opt/jmxt
                                 chtefi/jmxtrans
 ```
 
-If the configuration is all right (we can know by looking at the logs if we mount the volume), we can now start Graphite to store the metrics and display them.
-
-If jmxtrans was started, then we'll see our metrics too.
+If the configuration is all right (we can know by looking at the logs if we mount the volume), we can now look at Graphite.
 
 ![Graphite](graphite.png)
 
