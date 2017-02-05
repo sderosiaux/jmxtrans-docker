@@ -35,7 +35,9 @@ There is a default configuration provided in the repo (`jmxtrans_conf`) but it w
 To get some generic JMX data, we can run a Java program with these options:
 
 ```
--Dcom.sun.management.jmxremote.port=9010 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false
+-Dcom.sun.management.jmxremote.port=9010 \
+-Dcom.sun.management.jmxremote.authenticate=false \
+-Dcom.sun.management.jmxremote.ssl=false
 ```
 
 Note that JMXTrans will pull data from JMX every 10s (configured in the image command itself).
