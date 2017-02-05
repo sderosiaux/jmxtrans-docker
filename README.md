@@ -26,11 +26,23 @@ The image provides 2 volumes (and does not expose any port):
 
 # Start the containers
 
+It seems JMXTrans has trouble if Graphite is not available at first (no retry logic?), so we'll start with Graphite.
+
+## Start Graphite + Carbon.
+
+This image exposes 4 ports but only 2 are interesting for us: 80 for the interface, and 2003 to send our metrics.
+```
+$ docker run -p 8080:80 -p 2003:2003 -d nickstenning/graphite
+```
+
+If we connect to http://localhost:8080/, we can see the Graphite UI without metrics, a few seconds later, some `carbon` metrics will appears (automatic).
+
 ## Start our JMXTrans image.
 
-We need to provide some conf and we can add a volume binding to get the logs (optional).
+- We need to provide some conf by mounting the volumne `/opt/jmxtrans/conf`.
+- We can also mount the volume `/opt/jmxtrans/log` to get the logs (optional).
 
-There is a default configuration provided in the repo (`jmxtrans_conf`) but it won't fit your case: It is listening to `192.168.0.11:9010` to grab JMX data, you probably need to change that to your IP:port.
+There is a default configuration provided in the repo (`jmxtrans_conf`) but it won't probably fit your case: it is listening to `192.168.0.11:9010` to grab JMX data: you probably need to change that to your IP:port.
 
 To get some generic JMX data, we can run a Java program with these options:
 
@@ -51,15 +63,6 @@ $ docker run -d --name jmxtrans -v c:/tmp/jmxtrans-docker/jmxtrans_log:/opt/jmxt
 ```
 
 If the configuration is all right (we can know by looking at the logs if we mount the volume), we can now start Graphite to store the metrics and display them.
-
-## Start Graphite + Carbon.
-
-This image exposes 4 ports but only 2 are interesting for us: 80 for the interface, and 2003 to send our metrics.
-```
-$ docker run -p 8080:80 -p 2003:2003 -d nickstenning/graphite
-```
-
-If we connect to http://localhost:8080/, we can see the Graphite UI without metrics, a few seconds later, some `carbon` metrics will appears (automatic).
 
 If jmxtrans was started, then we'll see our metrics too.
 
