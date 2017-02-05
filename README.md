@@ -1,12 +1,12 @@
 # What do we need?
 
 - JMXtrans: provided by this image
-- A backend such as Graphite: I recommand using [`nickstenning/graphite`](https://github.com/nickstenning/docker-graphite).
+- A backend such as Graphite: I recommend using [`nickstenning/graphite`](https://github.com/nickstenning/docker-graphite).
 
 # How to build the image
 
 ```
-$ git https://github.com/chtefi/jmxtrans-docker
+$ git clone https://github.com/chtefi/jmxtrans-docker
 $ cd jmxtrans-docker
 $ docker build -t chtefi/jmxtrans:latest .
 ```
@@ -28,12 +28,16 @@ The image provides 2 volumes (and does not expose any port):
 
 - Start our JMXTrans image.
 
-We need to provide some conf and we can add a volume binding to get the logs (optional):
+We need to provide some conf and we can add a volume binding to get the logs (optional).
+
+There is a default configuration provided in the repo (`jmxtrans_conf`) but it won't fit your case: It is listening to `192.168.0.11:9010` to grab JMX data, you probably need to change that to your IP:port.
 
 ```
 $ ls jmxtrans_conf
 jmxtrans.conf
-$ docker run -d --name jmxtrans -v c:/tmp/jmxtrans-docker/jmxtrans_log:/opt/jmxtrans/log -v c:/tmp/jmxtrans-docker/jmxtrans_conf:/opt/jmxtrans/conf chtefi/jmxtrans
+$ docker run -d --name jmxtrans -v c:/tmp/jmxtrans-docker/jmxtrans_log:/opt/jmxtrans/log \
+                                -v c:/tmp/jmxtrans-docker/jmxtrans_conf:/opt/jmxtrans/conf \
+                                chtefi/jmxtrans
 ```
 
 If the configuration is all right (looking at the logs), we can start Graphite to store the metrics and display them.
